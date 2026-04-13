@@ -162,7 +162,7 @@ export function DiagramsModal(props: { config: DiagramConfig, onClose: () => voi
       return setErrorMessage('Nothing to add to the conversation.');
 
     const diagramMessage = createDMessageTextContent('assistant', diagramCode); // [chat] append assistant:diagram
-    // diagramMessage.purposeId = conversation.systemPurposeId;
+    // diagramMessage.authorPersonaId = conversation.systemPurposeId;
     diagramMessage.generator = { mgt: 'named', name: DIAGRAM_ACTOR_PREFIX + (diagramLlmId ? `-${diagramLlmId}` : '') };
 
     cHandler.messageAppend(diagramMessage);

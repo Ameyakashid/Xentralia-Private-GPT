@@ -21,7 +21,7 @@ export interface DMessage {
   pendingIncomplete?: boolean;        // if true, the message is incomplete (e.g. tokens won't be computed)
 
   // TODO: @deprecated - move to a Persona ID of the persona who wrote it, and still, could be teamwork...
-  purposeId?: string;                 // only assistant/system
+  authorPersonaId?: string;           // only assistant/system
 
   metadata?: DMessageMetadata;        // Semantic augmentation, mainly at creation
 
@@ -171,7 +171,7 @@ export function createDMessageFromFragments(role: DMessageRole, fragments: DMess
     // pendingIncomplete: false,  // we leave it undefined, same as false
 
     // absent
-    // purposeId: undefined, // @deprecated
+    // authorPersonaId: undefined, // @deprecated
     // metadata: undefined,
     // generator: undefined,
     // userFlags: undefined,
@@ -198,7 +198,7 @@ export function duplicateDMessage(message: Readonly<DMessage>, skipVoid: boolean
     // IMPORTANT: a duplicate message is never 'being generated' (anymore) - we may as well finalize it
     // ...(message.pendingIncomplete ? { pendingIncomplete: true } : {}),
 
-    purposeId: message.purposeId,
+    authorPersonaId: message.authorPersonaId,
 
     metadata: message.metadata ? duplicateDMessageMetadata(message.metadata) : undefined,
     generator: message.generator ? duplicateDMessageGenerator(message.generator) : undefined,
