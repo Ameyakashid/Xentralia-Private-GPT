@@ -52,8 +52,11 @@ export class ConversationHandler {
 
   static inlineUpdatePurposeInHistory(conversationId: DConversationId, history: DMessage[], assistantLlmId: DLLMId | undefined): void {
     const purposeId = getConversationSystemPurposeId(conversationId);
-    // TODO: HACK: find the persona identiy separately from the "first system message"
-    const systemMessageIndex = history.findIndex(m => m.role === 'system');
+
+    let systemMessageIndex = history.findIndex(m => m.role === 'system' && !!m.purposeId);
+    if (systemMessageIndex === -1 && history.length > 0 && history[0].role === 'system') {
+      systemMessageIndex = 0;
+    }
 
     let systemMessage: DMessage = systemMessageIndex >= 0
       ? history.splice(systemMessageIndex, 1)[0]
