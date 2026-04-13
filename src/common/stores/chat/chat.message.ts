@@ -1,6 +1,6 @@
 import { agiUuid } from '~/common/util/idUtils';
 
-import { createPlaceholderVoidFragment, createTextContentFragment, DMessageFragment, duplicateDMessageFragments } from './chat.fragments';
+import { createPlaceholderVoidFragment, createTextContentFragment, DMessageFragment, duplicateDMessageFragments, isPlaceholderPart, isVoidFragment } from './chat.fragments';
 
 import type { ModelVendorId } from '~/modules/llms/vendors/vendors.registry';
 
@@ -258,13 +258,12 @@ export function duplicateDMessageGenerator(generator: Readonly<DMessageGenerator
 // helpers - status checks
 
 export function messageWasInterruptedAtStart(message: Pick<DMessage, 'generator' | 'fragments'>): boolean {
-  // FIXME: placeholder-check (see below) too here?
-  return message.generator?.tokenStopReason === 'client-abort' && !message.fragments?.length;
+  return message.generator?.tokenStopReason === 'client-abort' && (!message.fragments?.length || messageOnlyContainsPlaceholder(message));
 }
 
-// export function messageOnlyContainsPlaceholder(message: Pick<DMessage, 'fragments'>): boolean {
-//   return message.fragments.length === 1 && isVoidFragment(message.fragments[0]) && isPlaceholderPart(message.fragments[0].part);
-// }
+export function messageOnlyContainsPlaceholder(message: Pick<DMessage, 'fragments'>): boolean {
+  return message.fragments.length === 1 && isVoidFragment(message.fragments[0]) && isPlaceholderPart(message.fragments[0].part);
+}
 
 
 // helpers - generators
