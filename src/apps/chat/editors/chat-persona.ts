@@ -46,7 +46,7 @@ export async function runPersonaOnConversationHead(
   const { assistantMessageId } = cHandler.messageAppendAssistantPlaceholder(
     CHATGENERATE_RESPONSE_PLACEHOLDER,
     {
-      purposeId: chatSystemInstruction?.purposeId,
+      authorPersonaId: chatSystemInstruction?.authorPersonaId,
       generator: { mgt: 'named', name: assistantLlmId },
       ...(isNotifyEnabled ? { userFlags: [MESSAGE_FLAG_NOTIFY_COMPLETE] } : {}),
     },

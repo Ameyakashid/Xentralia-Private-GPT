@@ -182,7 +182,7 @@ export function CleanerMessage(props: { message: DMessage, selected: boolean, re
     fragments: messageFragments,
     pendingIncomplete: messagePendingIncomplete,
     role: messageRole,
-    purposeId: messagePurposeId,
+    authorPersonaId: messagePurposeId,
     generator: messageGenerator,
     tokenCount: messageTokenCount,
     updated: messageUpdated,

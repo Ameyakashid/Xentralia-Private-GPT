@@ -62,7 +62,7 @@ export class ConversationHandler {
     // TODO: move this to a proper persona identity management
     // Update the system message with the current persona's message, if formerly unset
     if (!systemMessage.updated && purposeId && SystemPurposes[purposeId]?.systemMessage) {
-      systemMessage.purposeId = purposeId;
+      systemMessage.authorPersonaId = purposeId;
       const systemMessageText = bareBonesPromptMixer(SystemPurposes[purposeId].systemMessage, assistantLlmId);
       systemMessage.fragments = [createTextContentFragment(systemMessageText)];
 
@@ -260,7 +260,7 @@ export class ConversationHandler {
       } else {
         // replace (may truncate) the conversation history and append a message
         const newMessage = createDMessageFromFragments('assistant', messageUpdate.fragments); // [chat] append Beam message
-        newMessage.purposeId = getConversationSystemPurposeId(this.conversationId) ?? undefined;
+        newMessage.authorPersonaId = getConversationSystemPurposeId(this.conversationId) ?? undefined;
         newMessage.generator = messageUpdate.generator;
         // TODO: put the other rays in the metadata?! (reqby @Techfren)
         this.messageAppend(newMessage);

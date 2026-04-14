@@ -201,7 +201,7 @@ export function ChatMessage(props: {
     role: messageRole,
     fragments: messageFragments,
     pendingIncomplete: messagePendingIncomplete,
-    purposeId: messagePurposeId,
+    authorPersonaId: messagePurposeId,
     generator: messageGenerator,
     metadata: messageMetadata,
     created: messageCreated,

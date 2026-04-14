@@ -203,7 +203,7 @@ export namespace V3StoreDataToHead {
 
       cm = createDMessageTextContent(role, text);
       if (id) cm.id = id;
-      if (purposeId) cm.purposeId = purposeId;
+      if (purposeId) cm.authorPersonaId = purposeId;
       if (originLLM) cm.generator = { 'mgt': 'named', name: originLLM };
       if (metadata?.inReplyToText) {
         if (!cm.metadata) cm.metadata = {};
