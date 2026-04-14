@@ -29,7 +29,7 @@ import { createDMessageFromFragments, createDMessagePlaceholderIncomplete, DMess
 import { createErrorContentFragment, createTextContentFragment, DMessageAttachmentFragment, DMessageContentFragment, duplicateDMessageFragments } from '~/common/stores/chat/chat.fragments';
 import { gcChatImageAssets } from '~/common/stores/chat/chat.gc';
 import { getChatLLMId } from '~/common/stores/llms/store-llms';
-import { getConversation, getConversationSystemPurposeId, useConversation } from '~/common/stores/chat/store-chats';
+import { getConversation, getConversationSystemPurposeId, useChatStore, useConversation } from '~/common/stores/chat/store-chats';
 import { optimaActions, optimaOpenModels, optimaOpenPreferences, useOptimaChromeless } from '~/common/layout/optima/useOptima';
 import { useFolderStore } from '~/common/stores/folders/store-chat-folders';
 import { useIsMobile, useIsTallScreen } from '~/common/components/useMatchMedia';
@@ -62,6 +62,8 @@ export const CHAT_NOVEL_TITLE = 'Chat';
 export interface AppChatIntent {
   initialConversationId?: string;
   newChat?: 'voiceInput';
+  persona?: string;
+  beam?: string;
 }
 
 const scrollToBottomSx = {
@@ -522,7 +524,25 @@ export function AppChat() {
     // Create a new chat if requested
     else if (intent.newChat !== undefined)
       handleConversationNewInFocusedPane(false, false);
-  }, [handleConversationNewInFocusedPane, intent.initialConversationId, intent.newChat, openConversationInFocusedPane]);
+
+    // Apply persona from intent
+    if (intent.persona && focusedPaneConversationId) {
+      useChatStore.getState().setSystemPurposeId(focusedPaneConversationId, intent.persona as 'Custom');
+    }
+
+    // Auto-open beam mode if requested and we have a valid handler
+    if (intent.beam === 'true' && focusedPaneConversationId) {
+      const cHandler = ConversationsManager.getHandler(focusedPaneConversationId);
+      if (cHandler.isValid()) {
+        const beamStore = cHandler.getBeamStore();
+        if (beamStore && !beamStore.getState().isOpen) {
+           beamStore.getState().open([], null, false, () => {});
+           beamStore.getState().setIsMaximized(true);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intent.initialConversationId, intent.newChat]); // intentionally omitting other deps so we only apply this logic on load
 
   // [effect] Show snackbar with the focused chat title after a history navigation in focused pane
   React.useEffect(() => {

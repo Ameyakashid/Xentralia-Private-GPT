@@ -21,6 +21,7 @@ export const ROUTE_APP_CALL = '/call';
 export const ROUTE_APP_LINK_CHAT = '/link/chat/[chatLinkId]';
 export const ROUTE_APP_NEWS = '/news';
 export const ROUTE_APP_PERSONAS = '/personas';
+export const ROUTE_APP_ONBOARDING = '/onboarding';
 const ROUTE_CALLBACK_OPENROUTER = '/link/callback_openrouter';
 
 
@@ -61,6 +62,8 @@ export const navigateToNews = navigateFn(ROUTE_APP_NEWS);
 export const navigateToPersonas = navigateFn(ROUTE_APP_PERSONAS);
 
 export const navigateToChatLinkList = navigateFn(ROUTE_APP_LINK_CHAT.replace('[chatLinkId]', 'list'));
+
+export const navigateToOnboarding = navigateFn(ROUTE_APP_ONBOARDING);
 
 export const navigateBack = Router.back;
 

@@ -5,10 +5,11 @@ import { getChatTokenCountingMethod } from '../../apps/chat/store-app-chat';
 
 import { logger } from '~/common/logger/logger.client';
 import { markNewsAsSeen, shallRedirectToNews, sherpaReconfigureBackendModels, sherpaStorageMaintenanceNoChats_delayed } from '~/common/logic/store-logic-sherpa';
-import { navigateToNews, ROUTE_APP_CHAT } from '~/common/app.routes';
+import { navigateToNews, navigateToOnboarding, ROUTE_APP_CHAT, ROUTE_APP_ONBOARDING } from '~/common/app.routes';
 import { preloadTiktokenLibrary } from '~/common/tokens/tokens.text';
 import { useClientLoggerInterception } from '~/common/logger/hooks/useClientLoggerInterception';
 import { useNextLoadProgress } from '~/common/components/useNextLoadProgress';
+import { useOnboardingStore } from '../../apps/onboarding/store-onboarding';
 
 
 export function ProviderBootstrapLogic(props: { children: React.ReactNode }) {
@@ -25,17 +26,33 @@ export function ProviderBootstrapLogic(props: { children: React.ReactNode }) {
 
   // [boot-up] logic
   const isOnChat = route === ROUTE_APP_CHAT;
+  const isOnOnboarding = route === ROUTE_APP_ONBOARDING;
   const doRedirectToNews = isOnChat && shallRedirectToNews();
+
+  // Redirect to Onboarding if no generated persona
+  const [hasHydrated, setHasHydrated] = React.useState(false);
+  const generatedPersonaId = useOnboardingStore(state => state.generatedPersonaId);
+  const isRedirectingToOnboarding = !generatedPersonaId && !isOnOnboarding && isOnChat && hasHydrated;
+
+  React.useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+
+  React.useEffect(() => {
+    if (isRedirectingToOnboarding) {
+      navigateToOnboarding().catch(console.error);
+    }
+  }, [isRedirectingToOnboarding]);
 
 
   // redirect Chat -> News if fresh news
-  const isRedirectingToNews = React.useMemo(() => {
-    if (doRedirectToNews) {
+  const isRedirectingToNews = doRedirectToNews && !isRedirectingToOnboarding;
+
+  React.useEffect(() => {
+    if (isRedirectingToNews) {
       navigateToNews().then(() => markNewsAsSeen()).catch(console.error);
-      return true;
     }
-    return false;
-  }, [doRedirectToNews]);
+  }, [isRedirectingToNews]);
 
 
   // decide what to launch
@@ -80,7 +97,7 @@ export function ProviderBootstrapLogic(props: { children: React.ReactNode }) {
   // Render Gates
   //
 
-  if (isRedirectingToNews)
+  if (isRedirectingToOnboarding || isRedirectingToNews)
     return null;
 
   return props.children;

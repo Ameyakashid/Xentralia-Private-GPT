@@ -59,12 +59,12 @@ export const Release = {
 
 
 export const BaseProduct = {
-  ProductName: 'Big-AGI',
-  ProductURL: 'https://big-agi.com',
-  PrivacyPolicy: 'https://big-agi.com/privacy',
-  TermsOfService: 'https://big-agi.com/terms',
+  ProductName: 'Xentralia',
+  ProductURL: 'https://xentralia.com',
+  PrivacyPolicy: 'https://xentralia.com/privacy',
+  TermsOfService: 'https://xentralia.com/terms',
   // ecosystem
-  DocsBaseSite: 'https://big-agi.com/docs',
+  DocsBaseSite: 'https://xentralia.com/docs',
   OpenSupportDiscord: 'https://discord.gg/MkH4qj2Jp9',
   OpenSourceRepo: 'https://github.com/enricoros/big-agi',
   ReleaseNotes: '',
