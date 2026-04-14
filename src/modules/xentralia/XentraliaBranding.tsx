@@ -12,9 +12,7 @@ export function XentraliaBranding() {
         sx={{
           fontSize: '3rem',
           fontWeight: 'xl',
-          background: `linear-gradient(to right, ${XENTRALIA_BRAND.colors.primary}, ${XENTRALIA_BRAND.colors.secondary}, ${XENTRALIA_BRAND.colors.accent})`,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          color: XENTRALIA_BRAND.colors.text,
           mb: 1,
         }}
       >

@@ -32,7 +32,7 @@ export function Onboarding() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(to bottom, #0F172A, #1E293B)',
+        backgroundColor: '#111111',
         p: 3,
       }}
     >

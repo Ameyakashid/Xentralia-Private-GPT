@@ -38,9 +38,8 @@ export function OnboardingForm() {
         gap: 3,
         width: '100%',
         maxWidth: 500,
-        backgroundColor: 'rgba(30,41,59,0.8)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(148,163,184,0.1)',
+        backgroundColor: '#1d1d1d',
+        border: '1px solid #2c2c2c',
         borderRadius: 'lg',
         p: 4,
         mx: 'auto',
@@ -55,7 +54,7 @@ export function OnboardingForm() {
             setCompanyName(e.target.value);
             if (errors.companyName) setErrors({ ...errors, companyName: undefined });
           }}
-          sx={{ backgroundColor: 'rgba(15,23,42,0.6)', color: XENTRALIA_BRAND.colors.text }}
+          sx={{ backgroundColor: '#111111', color: XENTRALIA_BRAND.colors.text }}
         />
         {errors.companyName && <FormHelperText>{errors.companyName}</FormHelperText>}
       </FormControl>
@@ -70,7 +69,7 @@ export function OnboardingForm() {
             setUseCase(e.target.value);
             if (errors.useCase) setErrors({ ...errors, useCase: undefined });
           }}
-          sx={{ backgroundColor: 'rgba(15,23,42,0.6)', color: XENTRALIA_BRAND.colors.text }}
+          sx={{ backgroundColor: '#111111', color: XENTRALIA_BRAND.colors.text }}
           endDecorator={
             <Box sx={{ ml: 'auto', fontSize: 'xs', color: XENTRALIA_BRAND.colors.textMuted }}>
               {useCase.length}/1000
@@ -89,7 +88,7 @@ export function OnboardingForm() {
             setIndustry(newValue);
             if (errors.industry) setErrors({ ...errors, industry: undefined });
           }}
-          sx={{ backgroundColor: 'rgba(15,23,42,0.6)', color: XENTRALIA_BRAND.colors.text }}
+          sx={{ backgroundColor: '#111111', color: XENTRALIA_BRAND.colors.text }}
         >
           {INDUSTRY_OPTIONS.map((opt) => (
             <Option key={opt.value} value={opt.value}>
@@ -106,11 +105,11 @@ export function OnboardingForm() {
         loading={isSubmitting}
         sx={{
           mt: 2,
-          background: `linear-gradient(to right, ${XENTRALIA_BRAND.colors.primary}, ${XENTRALIA_BRAND.colors.secondary})`,
-          color: 'white',
+          backgroundColor: '#ffffff',
+          color: '#111111',
           fontWeight: 'xl',
           '&:hover': {
-            background: `linear-gradient(to right, ${XENTRALIA_BRAND.colors.secondary}, ${XENTRALIA_BRAND.colors.primary})`,
+            backgroundColor: '#e8e8e8',
           },
         }}
       >
