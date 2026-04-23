@@ -41,7 +41,7 @@ export interface DMessage {
   // volatileBeamRestore?: object;
 
   created: number;                    // created timestamp
-  updated: number | null;             // updated timestamp - null means incomplete - TODO: disambiguate vs pendingIncomplete
+  updated: number | null;             // updated timestamp - null means never updated (not to be confused with pendingIncomplete, which is the transient generation state)
 }
 
 export type DMessageId = string;
